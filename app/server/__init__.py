@@ -1,13 +1,13 @@
-from inspect import Arguments
-from typing import Tuple, Any
+from typing import Optional, Dict
+
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from server.domains.pokemon.routes import router as PokemonRouter
-
-from server.domains.pokemon.actions import retrieve_pokemons
+from server.domains.pokemon.actions import retrieve_pokemons, delete_pokemon
+from server.domains.services.actions import login_admin
 
 
 app = FastAPI()
@@ -23,7 +23,9 @@ app.include_router(PokemonRouter, tags=["Pokemon"], prefix="/pokemon")
 
 
 # CONSTANT
-LOGIN = []
+LOGIN: Dict = {"username": None,
+               "password": None,
+               "is_valid": None}
 
 
 @app.get("/")
@@ -33,48 +35,50 @@ async def index(request: Request):
 
 
 @app.route('/login')
-def login(request: Request):
-    print('Sem validação de Admin')
-    if LOGIN:
-        return templates.TemplateResponse('menu_admin.html', 
-                                          {"request": request})
+async def login(request: Request):
+    if LOGIN.get("is_valid"):
+        return templates.TemplateResponse("menu_admin.html", 
+                                        {"request": request})
     else:
-        return templates.TemplateResponse('login.html', 
-                                          {"request": request})
+        return templates.TemplateResponse("login.html", 
+                                        {"request": request})
 
 
-@app.get('/login/{username}')
-async def login(request: Request, username: str) -> Tuple[Any, int]:
-    print(username)
+@app.get('/login/credentials/')
+async def login_credentials(username: Optional[str] = None, password: Optional[str] = None):
+    LOGIN["username"] = username
+    LOGIN["password"] = password
+    LOGIN["is_valid"] = login_admin(LOGIN)
 
-    # user_login: Dict = {"username": username, "password": password}
-    # print(user_login)
-    # bool_login = login_admin(user_login)
-    # print(bool_login)
-    # if LOGIN:
-    return templates.TemplateResponse('menu_admin.html', 
-                                      {"request": request})
-    # else:
-    #     return templates.TemplateResponse('login.html', 
-    #                                       {"request": request})
-
+    return RedirectResponse('/login')
+    
 
 @app.route('/menuadminpokemon')
-def menu_admin_pokemon(request: Request):
-    if not LOGIN:
-        return RedirectResponse('/menuadmin')
-    lista_dados = retrieve_pokemons()
+async def menu_admin_pokemon(request: Request):
+    if not LOGIN.get("is_valid"):
+        return RedirectResponse('/login')
+    lista_dados = await retrieve_pokemons()
     lista = []
     for dados in lista_dados:
-        lista.append(dados.list())
+        lista.append(list(dados.values()))
 
     return templates.TemplateResponse('menu_admin_pokemon.html', 
                                       {"request": request, "lista": lista})
 
 
+@app.get('/menuadminpokemon/excluirpokemon')
+async def excluir_pokemon(id: Optional[str] = None):
+    if not LOGIN.get("is_valid"):
+        return RedirectResponse('/login')
+    pokemon = await delete_pokemon(id)
+    print(pokemon)
+
+    return RedirectResponse('/menuadminpokemon')
+
+
 @app.route('/menuadmin/adicionarpokemon')
 def adicionar_pokemon(request: Request):
-    if not LOGIN:
+    if not LOGIN.get("is_valid"):
         return RedirectResponse('/menuadminpokemon')
     return templates.TemplateResponse('pokemon_admin_dados.html', 
                                       {"request": request})
@@ -82,19 +86,18 @@ def adicionar_pokemon(request: Request):
 
 @app.route('/menuadminpokemon/editarpokemon')
 def editar_pokemon(request: Request):
-    if not LOGIN:
+    if not LOGIN.get("is_valid"):
         return RedirectResponse('/menuadminpokemon')
-    id = request.args['id']
-    print(id)
     return templates.TemplateResponse('pokemon_admin_dados.html', 
                                       {"request": request})
 
 
-@app.route('/sair')
+@app.get('/sair')
 def sair_admin():
     # busca a variavel global para modificar
-    global LOGIN
-    LOGIN = []
+    LOGIN["username"] = None
+    LOGIN["password"] = None
+    LOGIN["is_valid"] = None
     return RedirectResponse('/')
 
 
