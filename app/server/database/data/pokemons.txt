@@ -807,4 +807,3 @@ Blacephalon;Fire;1.8;13.0;Fireworks;Beast Boost;;Water;Ghost;It slithers toward 
 Zeraora;Electric;1.5;44.5;Thunderclap;Volt Absorb;;Ground;;It electrifies its claws and tears its opponents apart with them. Even if they dodge its attack, theyll be electrocuted by the flying sparks.
 Meltan;Steel;0.2;8.0;Hex Nut;;;Fire;Fighting;It melts particles of iron and other metals foundin the subsoil, so it can absorb them into itsbody of molten steel.
 Melmetal;Steel;2.5;800.0;Hex Nut;;;Fire;Fighting;Revered long ago for its capacity to create ironfrom nothing, for some reason it has come backto life after 3,000 years.
-Bulbasaur;Grass;0.7;6.9;Seed;Overgrow;;Fire;Psychic;While it is young, it uses the nutrients that are stored in the seed on its back in order to grow.;3;3;3;4;4;3
