@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>POKEMON</title>
+		<title>PokemonSearch</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel= "stylesheet" type= "text/css" href="../static/style/main.css">
@@ -15,10 +15,11 @@
 
 						<!-- Menu -->
 						<ul >
-							<li class="menu"><a href="/sair">Sair </a></li>
-							<li class="menu"><a href="Buscar id.html">Buscar ID </a></li>
-							<li class="menu"><a href="/menuadmin/adicionarpokemon">Adicionar Pokemon</a></li>
-							<li class="menu"><a href="/menuadmin">Menu Admin</a></li>
+							<li class="menu"><a href="/exit">Exit </a></li>
+							<li class="menu"><a href="/searchidpokemon">Search ID </a></li>
+							<li class="menu"><a href="/menuadmin/addpokemon">Add New Pokemon</a></li>
+							<li class="menu"><a href="/menuadmin/addallpokemon">Add All Pokemons</a></li>
+							<li class="menu"><a href="/login">Menu Admin</a></li>
 
 						</ul>
 
@@ -42,41 +43,43 @@
 								<table border="1">
 									<thead>
 										<th style="width:20px;"></th>
-										<th style="width:35px;">ID</th>
-										<th style="width:100px;">Nome</th>
-										<th style="width:100px;">Tipo</th>
-										<th style="width:70px;">Altura</th>
-										<th style="width:70px;">Peso</th>
-										<th style="width:100px;">Categoria</th>
-										<th style="width:150px;">Habilidade</th>
-										<th style="width:150px;">Habilidade2</th>
-										<th style="width:70px;">Fraqueza</th>
-										<th style="width:70px;">Fraqueza2</th>
-										<th style="width:50px;">Descricao</th>
+										<th style="width:100px;">Database_ID</th>
+										<th style="width:35px;">Pokedex_ID</th>
+										<th style="width:100px;">Name</th>
+										<th style="width:100px;">Type</th>
+										<th style="width:70px;">Height</th>
+										<th style="width:70px;">Weight</th>
+										<th style="width:100px;">Category</th>
+										<th style="width:150px;">First_Skill</th>
+										<th style="width:150px;">Second_Skill</th>
+										<th style="width:70px;">First_Weakness</th>
+										<th style="width:70px;">Second_Weakness</th>
+										<th style="width:50px;">Description</th>
 									</thead>
 									<tbody>
-									{% for dados in lista %}
+									{% for index_data in list_data %}
 										<tr >
 											<th>
-												<input style="width:20px;" type="radio" name="id" value="{{dados[0]}}">
+												<input style="width:20px;" type="radio" name="id" value="{{index_data[0]}}">
 											</th>
-											<th style="width:35px;">{{dados[0]}}</th>
-											<th style="width:100px;">{{dados[1]}}</th>
-											<th style="width:100px;">{{dados[2]}}</th>
-											<th style="width:70px;">{{dados[3]}}</th>
-											<th style="width:70px;">{{dados[4]}}</th>
-											<th style="width:100px;">{{dados[5]}}</th>
-											<th style="width:150px;">{{dados[6]}}</th>
-											<th style="width:150px;">{{dados[7]}}</th>
-											<th style="width:70px;">{{dados[8]}}</th>
-											<th style="width:70px;">{{dados[9]}}</th>
+											<th style="width:35px;">{{index_data[0]}}</th>
+											<th style="width:100px;">{{index_data[1]}}</th>
+											<th style="width:100px;">{{index_data[2]}}</th>
+											<th style="width:70px;">{{index_data[3]}}</th>
+											<th style="width:70px;">{{index_data[4]}}</th>
+											<th style="width:100px;">{{index_data[5]}}</th>
+											<th style="width:150px;">{{index_data[6]}}</th>
+											<th style="width:150px;">{{index_data[7]}}</th>
+											<th style="width:70px;">{{index_data[8]}}</th>
+											<th style="width:70px;">{{index_data[9]}}</th>
+											<th style="width:70px;">{{index_data[10]}}</th>
 											<th style="width:50px;">
 												<select style="width:20px;">
-													<option>{{dados[10]}}</option>
+													<option>{{index_data[11]}}</option>
 												</select>
 											</th>
-											<th><a class = "excluir" href="menuadminpokemon/excluirpokemon?id={{dados[0]}}">Excluir</a> </th>
-											<th><a class = "editar" href="menuadminpokemon/editarpokemon?id={{dados[0]}}">Editar</a> </th>
+											<th><a class = "Delete" href="menuadminpokemon/deletepokemon?id={{index_data[0]}}">Delete</a> </th>
+											<th><a class = "Update" href="menuadminpokemon/updatepokemon?id={{index_data[0]}}">Update</a> </th>
 										</tr>
 									{% endfor %}
 									</tbody>

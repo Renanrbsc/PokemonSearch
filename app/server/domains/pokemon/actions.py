@@ -13,10 +13,10 @@ def pokemon_helper(pokemon) -> dict:
                 "height": pokemon["height"],
                 "weight": pokemon["weight"],
                 "category": pokemon["category"],
-                "ability": pokemon["ability"],
-                "ability_two": pokemon["ability_two"],
-                "weakness": pokemon["weakness"],
-                "weakness_two": pokemon["weakness_two"],
+                "first_skill": pokemon["first_skill"],
+                "second_skill": pokemon["second_skill"],
+                "first_weakness": pokemon["first_weakness"],
+                "second_weakness": pokemon["second_weakness"],
                 "description": pokemon["description"]
                 }
 
@@ -53,6 +53,7 @@ async def update_pokemon(id: str, data: dict):
         updated_pokemon = await pokemon_collection.update_one(
             {"_id": ObjectId(id)}, {"$set": data}
         )
+        print('Pokemon UPDATE', )
         if updated_pokemon:
             return True
         return False
@@ -73,29 +74,4 @@ async def add_all_pokemon(pokemon_list: list) -> dict:
         await pokemon_collection.insert_one(pokemon_data)
         count_save = count_save + 1
     return f"{count_save} Pokemons saves."
-
-# def import_txt(text: str) -> List[Pokemon]:
-#     pokemon: Pokemon = Pokemon()
-#     list_models: List[Pokemon] = list()
-
-#     dictionary_list = convert_txt_for_json(text, pokemon.serialize())
-#     for data in dictionary_list:
-#         model: Pokemon = Pokemon(
-#                                  id=data['id'],
-#                                  name=data['name'],
-#                                  type=data['type'],
-#                                  height=data['height'],
-#                                  weight=data['weight'],
-#                                  category=data['category'],
-#                                  ability=data['ability'],
-#                                  ability_two=data['ability_two'],
-#                                  weakness=data['weakness'],
-#                                  weakness_two=data['weakness_two'],
-#                                  description=data['description']
-#                                  )
-#         list_models.append(model)
-
-#     for model in list_models:
-#         "save(model)"
-
-#     return list_models
+    

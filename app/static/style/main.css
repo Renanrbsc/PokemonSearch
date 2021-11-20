@@ -213,7 +213,7 @@ a:hover{
 }
 
 .formadmin{
-    width: 1200px;
+    width: 1400px;
     margin: 30px auto;
     background-color: #ffffff;
     border: solid 5px #cccccc;
@@ -222,24 +222,24 @@ a:hover{
     text-align: center;
 }
 
-.editar{
+.Update{
     background-color: blue;
     color: white;
     font-weight: bold;
     font-size: 20px;
     padding: 5px;
-}.editar:hover {
+}.Update:hover {
     background-color: white;
     color: blue;
 }
 
-.excluir{
+.Delete{
     background-color: red;
     color: white;
     font-weight: bold;
     font-size: 20px;
     padding: 5px;
-}.excluir:hover {
+}.Delete:hover {
     background-color: white;
     color: red;
 }

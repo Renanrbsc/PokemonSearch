@@ -11,10 +11,10 @@ class PokemonSchema(BaseModel):
     height: float = Field(...)
     weight: float = Field(...)
     category: str = Field(...)
-    ability: str = Field(...)
-    ability_two: str = Field(...)
-    weakness: str = Field(...)
-    weakness_two: str = Field(...)
+    first_skill: str = Field(...)
+    second_skill: str = Field(...)
+    first_weakness: str = Field(...)
+    second_weakness: str = Field(...)
     description: str = Field(...)
 
     class Config:
@@ -26,10 +26,10 @@ class PokemonSchema(BaseModel):
                 "height": 1.73,
                 "weight": 90,
                 "category": "Earth",
-                "ability": "Growl",
-                "ability_two": "Vine Whip",
-                "weakness": 'Fire',
-                "weakness_two": "Wate",
+                "first_skill": "Growl",
+                "second_skill": "Vine Whip",
+                "first_weakness": 'Fire',
+                "second_weakness": "Wate",
                 "description": "A strange seed was planted on its back at birth." 
                                "The plant sprouts and grows with this POKéMON"
             }
@@ -44,10 +44,10 @@ class UpdatePokemonModel(BaseModel):
     height: Optional[float]
     weight: Optional[float]
     category: Optional[str]
-    ability: Optional[str]
-    ability_two: Optional[str]
-    weakness: Optional[str]
-    weakness_two: Optional[str]
+    first_skill: Optional[str]
+    second_skill: Optional[str]
+    first_weakness: Optional[str]
+    second_weakness: Optional[str]
     description: Optional[str]
 
     class Config:
@@ -59,16 +59,32 @@ class UpdatePokemonModel(BaseModel):
                 "height": 1.73,
                 "weight": 90,
                 "category": "Earth",
-                "ability": "Growl",
-                "ability_two": "Vine Whip",
-                "weakness": 'Fire',
-                "weakness_two": "Wate",
+                "first_skill": "Growl",
+                "second_skill": "Vine Whip",
+                "first_weakness": 'Fire',
+                "second_weakness": "Wate",
                 "description": "A strange seed was planted on its back at birth." 
                                "The plant sprouts and grows with this Pokemon"
             }
         }
 
 
+def Serialize():
+    return {
+        "pokedex_id": "",
+        "name": "",
+        "type": "",
+        "height": "",
+        "weight": "",
+        "category": "",
+        "first_skill": "",
+        "second_skill": "",
+        "first_weakness": '',
+        "second_weakness": "",
+        "description": ""
+    }
+
+    
 def ResponseModel(data, message):
     return {
         "data": [data],

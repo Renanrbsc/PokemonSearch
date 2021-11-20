@@ -1,6 +1,5 @@
 from fastapi import Body
 from fastapi.encoders import jsonable_encoder
-from server.domains.pokemon.actions import pokemon_helper
 from utils.convert_txt import convert_txt_for_json, open_txt
 
 from server.domains.pokemon.actions import (
@@ -16,6 +15,7 @@ from server.domains.pokemon.models import (
     ResponseModel,
     PokemonSchema,
     UpdatePokemonModel,
+    Serialize
 )
 from server.domains import router
 
@@ -28,20 +28,9 @@ async def add_pokemon_data(pokemon: PokemonSchema = Body(...)):
 
 
 @router.post("/allpokemon", response_description="Pokemon data added into the database")
-async def add_all_pokemon_data(pokemon: PokemonSchema = Body(...)):
-    schema = {"pokedex_id": "",
-              "name": "",
-              "type": "",
-              "height": "",
-              "weight": "",
-              "category": "",
-              "ability": "",
-              "ability_two": "",
-              "weakness": '',
-              "weakness_two": "",
-              "description": ""}
+async def add_all_pokemon_data():
     url = 'app/server/database/data/pokemons.txt'
-    all_pokemon = convert_txt_for_json(open_txt(url), schema)
+    all_pokemon = convert_txt_for_json(open_txt(url), Serialize())
     new_pokemon = await add_all_pokemon(all_pokemon)
     return ResponseModel(new_pokemon, "Pokemon added successfully.")
 
